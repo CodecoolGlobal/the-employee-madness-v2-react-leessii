@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const employees = require("./routes/employees");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
@@ -12,6 +13,7 @@ if (!MONGO_URL) {
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/employees/", employees);
 
