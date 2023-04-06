@@ -3,8 +3,9 @@ const router = express.Router();
 const EmployeeModel = require("../db/employee.model");
 
 router.get("/", async (req, res) => {
-    const { option, input } = req.query;
+    const { option, input, arragement } = req.query;
     query={};
+    sort={};
 
     // filter
     if (option === "level") {
@@ -12,11 +13,25 @@ router.get("/", async (req, res) => {
     }
 
     if (option === "position") {
-        query.position = { $regex: `${input}`, $options: "i" }
+        query.position = { $regex: `${input}`, $options: "i" };
+    }
+
+    // sort 
+    if (arragement === "level") {
+        sort.level = 1;
+    }
+
+    if (arragement === "position") {
+        sort.position = 1;
+    }
+
+    if (arragement === "name") {
+        sort.name = 1;
     }
 
     console.log(query)
-    const employees = await EmployeeModel.find(query).sort({ created: "desc" });
+    console.log(sort)
+    const employees = await EmployeeModel.find(query).sort(sort);
     return res.json(employees);
 });
   
