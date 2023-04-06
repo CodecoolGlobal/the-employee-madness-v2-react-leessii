@@ -1,6 +1,6 @@
 import React from 'react'
 
-const EmployeeFilter = ( { onChange, onInput } ) => {
+const EmployeeFilter = ( { onChange, onInput, onArrange } ) => {
   return (
     <div>
 
@@ -14,6 +14,16 @@ const EmployeeFilter = ( { onChange, onInput } ) => {
         </label>
 
         <input type="text" onChange={onInput}/>
+
+        <label>
+            Chose arragement criteria:
+            <select name="arrange" id="arrange" onChange={onArrange}>
+                <option value="">--Please choose an option--</option>
+                <option value="level">Level</option>
+                <option value="position">Position</option>
+                <option value="name">Name</option>
+            </select>
+        </label>
 
     </div>
   )
