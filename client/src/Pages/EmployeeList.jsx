@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
+import EmployeeFilter from "../Components/EmployeeFilter/EmployeeFilter";
 
-const fetchEmployees = () => {
-  return fetch("/api/employees").then((res) => res.json());
+const fetchEmployees = (option, input) => {
+  // crate query params using the URLSearchParams() object
+  const params = new URLSearchParams();
+  // append the values -> to use toString();
+  params.append("option", option);
+  params.append("input", input);
+
+  return fetch(`/api/employees/?${params.toString()}`)
+  .then((res) => res.json());
 };
 
 const deleteEmployee = (id) => {
@@ -15,6 +23,18 @@ const deleteEmployee = (id) => {
 const EmployeeList = () => {
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState(null);
+  // save filter options
+  const [option, setOption] = useState(null);
+  const [input, setInput] = useState("");
+
+  // handle filter functions
+  const handleOption = (e) => {
+    setOption(e.target.value)
+  }
+
+  const handleInput = (e) => {
+    setInput(e.target.value)
+  }
 
   const handleDelete = (id) => {
     deleteEmployee(id);
@@ -25,18 +45,23 @@ const EmployeeList = () => {
   };
 
   useEffect(() => {
-    fetchEmployees()
+    fetchEmployees(option, input)
       .then((employees) => {
         setLoading(false);
         setEmployees(employees);
       })
-  }, []);
+  }, [option, input]);
 
   if (loading) {
     return <Loading />;
   }
 
-  return <EmployeeTable employees={employees} onDelete={handleDelete} />;
+  return (
+    <>
+      <EmployeeFilter onChange={handleOption} onInput={handleInput} />
+      <EmployeeTable employees={employees} onDelete={handleDelete} />;
+    </>
+  )
 };
 
 export default EmployeeList;
