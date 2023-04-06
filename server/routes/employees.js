@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     }
 
     if (option === "position") {
-        query.position = { $regex: `${input}`, $options: "1" }
+        query.position = { $regex: `${input}`, $options: "i" }
     }
 
     console.log(query)
