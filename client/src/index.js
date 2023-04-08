@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         element: <EquipmentCreator />
       },
       {
-        path: "/equipment/search",
+        path: "/equipment/:search",
         element: <EquipmentSearch />
       },
     ],
