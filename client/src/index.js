@@ -13,6 +13,7 @@ import EquipmentCreator from "./Pages/EquipmentCreator";
 import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
+import EquipmentSearch from "./Pages/EquipmentSearch";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/equipment",
         element: <EquipmentCreator />
+      },
+      {
+        path: "/equipment/search",
+        element: <EquipmentSearch />
       },
     ],
   },
