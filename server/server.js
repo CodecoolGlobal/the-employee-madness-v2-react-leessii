@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const employees = require("./routes/employees");
+const equipment = require("./routes/equipment");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/employees/", employees);
+app.use("/api/equipment/", equipment);
 
 const main = async () => {
   await mongoose.connect(MONGO_URL);

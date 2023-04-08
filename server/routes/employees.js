@@ -29,8 +29,6 @@ router.get("/", async (req, res) => {
         sort.name = 1;
     }
 
-    console.log(query)
-    console.log(sort)
     const employees = await EmployeeModel.find(query).sort(sort);
     return res.json(employees);
 });
