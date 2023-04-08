@@ -19,7 +19,6 @@ router.post("/", async (req, res, next) => {
 });
 
 router.patch("/:id", async (req, res, next) => {
-    console.log("I AM HERE" + req.body)
     try {
         const equipment = await EquipmentModel.findOneAndUpdate(
         { _id: req.params.id },
