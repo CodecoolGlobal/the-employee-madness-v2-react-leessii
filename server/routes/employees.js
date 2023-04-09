@@ -50,8 +50,6 @@ router.post("/", async (req, res, next) => {
 });
   
 router.patch("/:id", async (req, res, next) => {
-    console.log(req.body);
-
     try {
         const employee = await EmployeeModel.findOneAndUpdate(
         { _id: req.params.id },
