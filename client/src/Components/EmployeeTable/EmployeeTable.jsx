@@ -1,8 +1,9 @@
 import "./EmployeeTable.css";
 import Employee from "../Employee/Employee";
 
-const EmployeeTable = ({ employees, onDelete }) => (
+const EmployeeTable = ({ employees, onDelete, pageNumber, pages, setPageNumber }) => (
   <div className="EmployeeTable">
+    <h1>Page {pageNumber + 1}</h1>
     <table>
       <thead>
         <tr>
@@ -24,6 +25,9 @@ const EmployeeTable = ({ employees, onDelete }) => (
         ))}
       </tbody>
     </table>
+          {pages.map((pageIndex)=> (
+            <button key={pageIndex} onClick={() => setPageNumber(pageIndex)}>{pageIndex +1}</button>
+          ))}
   </div>
 );
 

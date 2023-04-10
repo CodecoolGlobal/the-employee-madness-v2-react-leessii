@@ -3,9 +3,15 @@ const router = express.Router();
 const EmployeeModel = require("../db/employee.model");
 
 router.get("/", async (req, res) => {
-    const { option, input, arragement } = req.query;
+    const { option, input, arragement, pageNumber } = req.query;
     query={};
     sort={};
+    // which page we are on
+    const page = parseInt(pageNumber);
+    // how many to display
+    const pageSize = parseInt(10);
+    // get total number of employes
+    const total = await EmployeeModel.countDocuments({})
 
     // filter
     if (option === "level") {
@@ -29,8 +35,11 @@ router.get("/", async (req, res) => {
         sort.name = 1;
     }
 
-    const employees = await EmployeeModel.find(query).sort(sort);
-    return res.json(employees);
+    const employees = await EmployeeModel.find(query).sort(sort).limit(pageSize).skip(pageSize*page);
+    return res.json({
+        totalPages: Math.ceil(total / pageSize),
+        employees
+    });
 });
   
 router.get("/:id", async (req, res) => {
