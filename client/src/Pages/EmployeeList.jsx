@@ -44,7 +44,6 @@ const EmployeeList = () => {
     setArragement(e.target.value)
   }
 
-
   const handleDelete = (id) => {
     deleteEmployee(id);
 

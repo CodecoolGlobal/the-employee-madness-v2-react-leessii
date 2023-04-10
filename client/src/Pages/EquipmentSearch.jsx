@@ -16,7 +16,7 @@ const EquipmentSearch = () => {
 
     useEffect(() => {
         fetchEquipment(paraValue, setEmployees)
-    }, [])
+    }, [paraValue])
 
   return (
         <div className="EmployeeTable">
