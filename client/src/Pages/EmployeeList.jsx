@@ -3,7 +3,7 @@ import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
 import EmployeeFilter from "../Components/EmployeeFilter/EmployeeFilter";
 
-const fetchEmployees = (option, input, arragement, pageNumber) => {
+const fetchEmployees = (option, input, arragement, pageNumber, isAsc) => {
   // crate query params using the URLSearchParams() object
   const params = new URLSearchParams();
   // append the values -> to use toString();
@@ -11,6 +11,7 @@ const fetchEmployees = (option, input, arragement, pageNumber) => {
   params.append("input", input);
   params.append("arragement", arragement);
   params.append("pageNumber", pageNumber);
+  params.append("isAsc", isAsc);
 
   return fetch(`/api/employees/?${params.toString()}`)
   .then((res) => res.json());
@@ -25,15 +26,21 @@ const deleteEmployee = (id) => {
 const EmployeeList = () => {
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState(null);
+
   // save filter options
   const [option, setOption] = useState(null);
   const [input, setInput] = useState("");
+
   // save arragement option
   const [arragement, setArragement] = useState(null);
+
   // pagination
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const pages = new Array(totalPages).fill(null).map((v, i) => i);
+
+  // sort by Clicking name 
+  const [isAsc, setisAsc] = useState(null);
 
   // handle filter functions
   const handleOption = (e) => {
@@ -58,13 +65,13 @@ const EmployeeList = () => {
   };
 
   useEffect(() => {
-    fetchEmployees(option, input, arragement, pageNumber)
+    fetchEmployees(option, input, arragement, pageNumber, isAsc)
       .then(({totalPages, employees}) => {
         setLoading(false);
         setTotalPages(totalPages);
         setEmployees(employees);
       })
-  }, [option, input, arragement, pageNumber]);
+  }, [option, input, arragement, pageNumber, isAsc]);
 
   if (loading) {
     return <Loading />;
@@ -73,7 +80,7 @@ const EmployeeList = () => {
   return (
     <>
       <EmployeeFilter onChange={handleOption} onInput={handleInput} onArrange={handleArrange} />
-      <EmployeeTable employees={employees} onDelete={handleDelete} pageNumber={pageNumber} pages={pages} setPageNumber={setPageNumber}/>;
+      <EmployeeTable employees={employees} onDelete={handleDelete} pageNumber={pageNumber} pages={pages} setPageNumber={setPageNumber} isAsc={isAsc} setisAsc={setisAsc} />;
     </>
   )
 };

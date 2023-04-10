@@ -16,6 +16,10 @@ const EmployeeSchema = new Schema({
     default: false,
   },
   equipment: String,
+  brand: {
+		type: mongoose.Schema.Types.ObjectId, 
+    ref: 'FavoriteBrands',
+	},
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

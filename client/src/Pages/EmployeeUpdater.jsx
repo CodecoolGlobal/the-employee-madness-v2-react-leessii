@@ -18,6 +18,10 @@ const fetchEmployee = (id) => {
   return fetch(`/api/employees/${id}`).then((res) => res.json());
 };
 
+const fetchFavouriteBrands = (dataSetter) => {
+  return fetch(`/api/favouritebrands/`).then((res) => res.json()).then((data) => dataSetter(data));
+};
+
 const fetchEquipment = (dataSetter) => {
   return fetch(`/api/equipment/`).then((res) => res.json()).then((data) => dataSetter(data));
 };
@@ -30,6 +34,7 @@ const EmployeeUpdater = () => {
   const [equipment, setEquipment] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
   const [employeeLoading, setEmployeeLoading] = useState(true);
+  const [favouriteBrands, setFavouriteBrands] = useState(null);
 
   useEffect(() => {
     setEmployeeLoading(true);
@@ -38,6 +43,7 @@ const EmployeeUpdater = () => {
         setEmployee(equipment);
         setEmployeeLoading(false);
         fetchEquipment(setEquipment);
+        fetchFavouriteBrands(setFavouriteBrands);
       });
   }, [id]);
 
@@ -61,6 +67,7 @@ const EmployeeUpdater = () => {
       onSave={handleUpdateEmployee}
       disabled={updateLoading}
       onCancel={() => navigate("/")}
+      favouriteBrands={favouriteBrands}
     />
   );
 };

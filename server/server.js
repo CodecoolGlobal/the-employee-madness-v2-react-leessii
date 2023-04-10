@@ -5,6 +5,7 @@ const cors = require("cors");
 const employees = require("./routes/employees");
 const employeesSearch = require("./routes/employeePageSearch");
 const equipment = require("./routes/equipment");
+const favouritebrands = require("./routes/favoutireBrands");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/employees/", employees);
 app.use("/employees/", employeesSearch);
 app.use("/api/equipment/", equipment);
+app.use("/api/favouritebrands/", favouritebrands);
 
 const main = async () => {
   await mongoose.connect(MONGO_URL);
