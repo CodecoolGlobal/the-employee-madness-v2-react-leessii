@@ -9,6 +9,7 @@ const fetchEquipment = (para, setEmployees) => {
 
 const EquipmentSearch = () => {
     const [employees, setEmployees] = useState(null);
+    // get the URL path
     const path = window.location.pathname; 
     const parts = path.split('/'); 
     const paraValue = parts[parts.length - 1]; 
